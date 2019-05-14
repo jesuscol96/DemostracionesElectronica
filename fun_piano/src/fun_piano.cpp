@@ -2,7 +2,7 @@
 
 
 int get_freq(int nota,int oct){
-  
+
   int freq;
   switch(nota){
     case 1: freq=440; break;
@@ -16,11 +16,11 @@ int get_freq(int nota,int oct){
     case 9: freq=698; break;
     case 10: freq=740; break;
     case 11: freq=784; break;
-    case 12: freq=831; break;    
+    case 12: freq=831; break;
   }
 
   for(int i=0; i<oct-1; i++)
-    freq*=2;  
+    freq*=2;
 
   return freq;
 }
@@ -51,11 +51,11 @@ int main(void)
 #endif
 
 //----------------------------------SETUP--------------------------------------------------------
-	
+
 	Serial.begin(9600);
 
 	//LEDs 1-12
-	for (int i = 1; i <= 12; i++)	
+	for (int i = 1; i <= 12; i++)
 		pinMode(i, OUTPUT);
 
 	//Variables
@@ -74,14 +74,14 @@ int main(void)
 	int i=0;
 
 //----------------------------------------------------------------------------------------------
-    
+
 	for (;;) {
 
 	//--------------------------------------LOOP--------------------------------------------------------
 
 
 		if(Serial.available() > 0){
-      
+
       		char r=Serial.read();
 			if(r=='y'){
 				play=true;
@@ -90,34 +90,34 @@ int main(void)
 			else if(r=='r'){
 				i=0;
         		Serial.println("Reset playing");
-			}  
+			}
 			else if(r=='s'){
 				play=false;
 		        noTone(tone_pin);
 		        Serial.println("Stop playing");
-			}			
+			}
 		}
-		
-		if(play){			
+
+		if(play){
 
 			//Parameters calculation
-   		int prev_nota;
+   			int prev_nota;
 			if(i>0)
 				prev_nota=melody[i-1][1];
 			else
 				prev_nota=1;
-			
+
 			freq= get_freq(melody[i][1],melody[i][0]);
-			tmax = (melody[i][2] * u_tiempo)/2;	
-	
+			tmax = (melody[i][2] * u_tiempo)/2;
+
 			//Put tone
 			noTone(tone_pin);
 			digitalWrite(prev_nota, LOW);
 
 			if(melody[i][1]!=0){
 		        tone(tone_pin,freq);
-		        digitalWrite(melody[i][1], HIGH);         
-     		 } 
+		        digitalWrite(melody[i][1], HIGH);
+     		 }
 		 	delay(tmax);
 		 	i++;
 		 	if(i>=n_melody){
@@ -125,7 +125,7 @@ int main(void)
         		noTone(tone_pin);
 		 		i=0;
 		 	}
-		
+
 		}
 
 
@@ -133,6 +133,6 @@ int main(void)
 
 		if (serialEventRun) serialEventRun();
 	}
-        
+
 	return 0;
 }
