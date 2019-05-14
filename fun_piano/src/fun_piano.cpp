@@ -101,7 +101,7 @@ int main(void)
 		if(play){
 
 			//Parameters calculation
-   			int prev_nota;
+   		int prev_nota;
 			if(i>0)
 				prev_nota=melody[i-1][1];
 			else
@@ -122,7 +122,7 @@ int main(void)
 		 	i++;
 		 	if(i>=n_melody){
 		 		play=false;
-        		noTone(tone_pin);
+        noTone(tone_pin);
 		 		i=0;
 		 	}
 
